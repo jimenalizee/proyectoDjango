@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cerrar sesión{% endblock title %}
+{% block body_attribute %}class="h-100"{% endblock body_attribute %}
+
+{% block content %}
+<div class="auth-bg d-flex min-vh-100 justify-content-center align-items-center">
+    <div class="row g-0 justify-content-center w-100 m-xxl-5 px-xxl-4 m-3">
+        <div class="col-xl-4 col-lg-5 col-md-6">
+            <div class="card overflow-hidden text-center h-100 p-xxl-4 p-3 mb-0">
+                <a href="/" class="auth-brand mb-4">
+                    <img src="{% static 'images/logo-dark.png' %}" alt="dark logo" height="26" class="logo-dark">
+                    <img src="{% static 'images/logo.png' %}" alt="logo light" height="26" class="logo-light">
+                </a>
+
+                <h4 class="fw-semibold mb-2 fs-18">Cerrar sesión</h4>
+
+                <div class="d-flex align-items-center gap-2 my-3 mx-auto">
+                    <img src="{% static 'images/users/avatar-1.jpg' %}" alt=""
+                         class="avatar-lg rounded-circle img-thumbnail">
+                    <div class="text-start">
+                        <h4 class="fw-semibold text-dark mb-0">
+                            {{ request.user.name|default:request.user.username }}
+                        </h4>
+                        <small class="text-muted">Se cerrará la sesión actual</small>
+                    </div>
+                </div>
+
+                <div class="mb-3 text-start">
+                    <div class="bg-warning-subtle p-3 rounded fst-italic fw-medium mb-0" role="alert">
+                        <p class="mb-0 text-dark">
+                            ¿Está seguro de que desea cerrar sesión?
+                        </p>
+                    </div>
+                </div>
+
+                <form method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+                    {% endif %}
+
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-danger fw-semibold" type="submit">
+                            Confirmar cierre de sesión
+                        </button>
+                        <a href="{% url 'users:panel' %}" class="btn btn-outline-secondary fw-semibold">
+                            Cancelar y volver al panel
+                        </a>
+                    </div>
+                </form>
+
+                <p class="text-muted fs-14 my-3">
+                    Volver a
+                    <a href="{% url 'users:panel' %}" class="text-danger fw-semibold ms-1">Mi panel</a>
+                </p>
+
+                <p class="mt-auto mb-0">
+                    <script>document.write(new Date().getFullYear())</script>
+                    © Lizeth Coaquira Quisbert
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

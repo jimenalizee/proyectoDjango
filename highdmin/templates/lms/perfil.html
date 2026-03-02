@@ -1,0 +1,66 @@
+{% extends 'vertical.html' %}
+{% load static %}
+
+{% block title %}Perfil | Mini-LMS{% endblock title %}
+
+{% block page_title %}
+    {% include 'partials/topbar.html' %}
+{% endblock page_title %}
+
+{% block extra_css %}
+<link href="{% static 'custom/css/lms.css' %}" rel="stylesheet">
+{% endblock extra_css %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-3">Mi perfil</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered align-middle mb-0">
+                        <tbody>
+                            <tr>
+                                <th style="width:220px;">Username</th>
+                                <td>{{ usuario.username }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ usuario.email|default:"-" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nombre</th>
+                                <td>{{ usuario.name|default:"-" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Rol</th>
+                                <td>
+                                    {% if usuario.is_superuser %}
+                                        ADMINISTRADOR
+                                    {% else %}
+                                        {{ usuario.rol }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Activo</th>
+                                <td>{{ usuario.is_active|yesno:"Sí,No" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Staff</th>
+                                <td>{{ usuario.is_staff|yesno:"Sí,No" }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-3 d-flex gap-2">
+                    <a href="{% url 'users:panel' %}" class="btn btn-primary btn-sm">Ir al panel</a>
+                    <a href="{% url 'users:update' %}" class="btn btn-outline-secondary btn-sm">Editar perfil (template)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock page_content %}

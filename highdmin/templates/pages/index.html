@@ -1,0 +1,112 @@
+{% extends 'horizontal.html' %}
+
+{% load static %}
+
+{% block title %}Mini-LMS{% endblock title %}
+
+{% block page_title %}
+{% include 'partials/topbar.html'  %}
+{% endblock page_title %}
+
+{% block extra_css %}{% endblock extra_css %}
+
+{% block page_content %}
+
+                 <!-- START carousel-->
+               {% comment %} <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active">
+                            <img class="d-block img-fluid" src="{% static '/images/small/small-4.jpg' %}"
+                                alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{% static '/images/small/small-1.jpg' %}"
+                                alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{% static '/images/small/small-2.jpg' %}"
+                                alt="Third slide">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </a>
+                </div> 
+
+<div class="py-4"> {% endcomment %}
+
+  <!-- HERO -->
+
+  <div class="card mb-4">
+
+    <div class="card-body">
+ 
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div>
+          <h3 class="mb-1">Catálogo de cursos</h3>
+          <p class="text-muted mb-0">Explorar cursos disponibles. Para gestionar cursos y acceder al panel, se requiere iniciar sesión.</p>
+        </div>
+
+        <div class="d-flex gap-2">
+          {% if request.user.is_authenticated %}
+            <a href="{% url 'users:panel' %}" class="btn btn-primary">Ir a mi panel</a>
+
+            {% if request.user.es_administrador or request.user.es_docente %}
+              <a href="{% url 'cursos_panel:lista' %}" class="btn btn-outline-secondary">Gestionar cursos</a>
+            {% endif %}
+
+            <a href="{% url 'account_logout' %}" class="btn btn-outline-danger">Cerrar sesión</a>
+          {% else %}
+            <a href="{% url 'users:panel_demo' %}" class="btn btn-outline-warning">Ir al panel demo</a>
+            
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+
+           
+
+        <!-- END carousel-->
+  <!-- GRID DE CURSOS -->
+  <div class="row g-3">
+    {% for c in cursos %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title mb-1">{{ c.titulo }}</h5>
+            <div class="text-muted small mb-2">
+              Docente: {{ c.docente.name|default:c.docente.username }} · Inicio: {{ c.fecha_inicio }}
+            </div>
+            <p class="card-text mb-0">
+              {{ c.descripcion|default:"Sin descripción."|truncatechars:130 }}
+            </p>
+          </div>
+          <div class="card-footer bg-transparent border-0 pt-0">
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'cursos:detalle' c.id %}">Ver detalle</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-info mb-0">No hay cursos activos todavía.</div>
+      </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+
+{% endblock page_content %}
+
+{% block extra_javascript %}
+<script src="{% static '/vendor/apexcharts/apexcharts.min.js' %}"></script>
+
+<!-- Projects Analytics Dashboard App js -->
+<script src="{% static '/js/pages/dashboard.js' %}"></script>
+{% endblock extra_javascript %}

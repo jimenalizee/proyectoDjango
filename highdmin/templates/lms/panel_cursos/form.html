@@ -1,0 +1,52 @@
+{% extends 'vertical.html' %}
+{% load static %}
+{% block title %}Curso | Mini-LMS{% endblock title %}
+{% block page_title %}{% include 'partials/topbar.html' %}{% endblock page_title %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-12 col-lg-8">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="header-title mb-3">Curso</h4>
+
+        <form method="post">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label class="form-label">Título</label>
+            {{ form.titulo }}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            {{ form.descripcion }}
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Fecha inicio</label>
+              {{ form.fecha_inicio }}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Carga horaria (opcional)</label>
+              {{ form.carga_horaria }}
+            </div>
+          </div>
+
+          <div class="form-check mb-3">
+            {{ form.activo }}
+            <label class="form-check-label ms-1" for="{{ form.activo.id_for_label }}">Activo</label>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary" type="submit">Guardar</button>
+            <a class="btn btn-outline-secondary" href="{% url 'cursos_panel:lista' %}">Cancelar</a>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock page_content %}

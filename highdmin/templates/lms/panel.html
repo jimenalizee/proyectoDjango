@@ -1,0 +1,46 @@
+{% extends 'vertical.html' %}
+{% load static %}
+
+{% block title %}Panel | Mini-LMS{% endblock title %}
+
+{% block page_title %}
+    {% include 'partials/topbar.html' %}
+{% endblock page_title %}
+
+{% block extra_css %}
+<link href="{% static 'custom/css/lms.css' %}" rel="stylesheet">
+{% endblock extra_css %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-2">Panel del mini-LMS</h4>
+
+                <p class="text-muted mb-2">
+                    Usuario: <strong>{{ usuario.username }}</strong>
+                </p>
+
+                <div class="mb-3">
+                    <span class="badge bg-primary fs-6">Rol: {{ rol_mostrado }}</span>
+                </div>
+
+                <div class="alert alert-info" role="alert">
+                    {{ mensaje }}
+                </div>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{% url 'users:perfil' %}" class="btn btn-outline-primary btn-sm">Mi perfil</a>
+                    <a href="{% url 'users:panel_demo' %}" class="btn btn-outline-secondary btn-sm">Panel demo</a>
+                    <a href="{% url 'account_logout' %}" class="btn btn-outline-danger btn-sm">Cerrar sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock page_content %}
+
+{% block extra_javascript %}
+<script src="{% static 'custom/js/lms.js' %}"></script>
+{% endblock extra_javascript %}

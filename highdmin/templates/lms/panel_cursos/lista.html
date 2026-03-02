@@ -1,0 +1,55 @@
+{% extends 'vertical.html' %}
+{% load static %}
+{% block title %}Panel Cursos | Mini-LMS{% endblock title %}
+
+{% block page_title %}{% include 'partials/topbar.html' %}{% endblock page_title %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <h4 class="header-title mb-0">Mis cursos</h4>
+          <a href="{% url 'cursos_panel:nuevo' %}" class="btn btn-primary btn-sm">Nuevo curso</a>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-sm table-striped align-middle mb-0">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Inicio</th>
+                <th>Activo</th>
+                <th style="width: 180px;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for c in cursos %}
+              <tr>
+                <td>{{ c.id }}</td>
+                <td>{{ c.titulo }}</td>
+                <td>{{ c.fecha_inicio }}</td>
+                <td>
+                  {% if c.activo %}<span class="badge bg-success">Sí</span>{% else %}<span class="badge bg-secondary">No</span>{% endif %}
+                </td>
+                <td>
+                  <a class="btn btn-sm btn-outline-secondary" href="{% url 'cursos_panel:editar' c.id %}">Editar</a>
+                  <a class="btn btn-sm btn-outline-danger" href="{% url 'cursos_panel:eliminar' c.id %}">Eliminar</a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="text-center text-muted py-4">No hay cursos creados.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock page_content %}

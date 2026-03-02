@@ -1,0 +1,51 @@
+{% extends 'vertical.html' %}
+{% load static %}
+{% block title %}Mis cursos | Mini-LMS{% endblock title %}
+{% block page_title %}{% include 'partials/topbar.html' %}{% endblock page_title %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="header-title mb-3">Mis cursos</h4>
+
+        <div class="table-responsive">
+          <table class="table table-sm table-striped align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Curso</th>
+                <th>Docente</th>
+                <th>Inicio</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in inscripciones %}
+              <tr>
+                <td>{{ i.curso.titulo }}</td>
+                <td>{{ i.curso.docente.name|default:i.curso.docente.username }}</td>
+                <td>{{ i.curso.fecha_inicio }}</td>
+                <td>
+                  <a class="btn btn-sm btn-outline-primary" href="#">
+                    Ver curso
+                  </a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="4" class="text-center text-muted py-4">
+                  Aún no estás inscrito en ningún curso.
+                  <a href="{% url 'cursos:catalogo' %}">Ver catálogo</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock page_content %}

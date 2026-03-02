@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load static i18n %}
+
+{% block html_attribute %}data-layout="topnav"{% endblock html_attribute %}
+
+{% block title %}{% endblock title %}
+
+{% block extra_css %}{% endblock extra_css %}
+
+{% block body_attribute %}{% endblock body_attribute %}
+
+{% block content %}
+
+<div class="wrapper">
+
+    {% block page_title %}{% endblock page_title %}
+    
+    {% include 'partials/horizontal-nav.html' %}
+
+    <div class="page-content">
+
+        <div class="page-container">
+
+            {% block page_content %}{% endblock page_content %}
+
+        </div>
+
+        {% include 'partials/customizer.html' %}
+
+        {% include 'partials/footer.html' %}
+
+    </div>
+</div>
+
+{% include 'partials/customizer.html' %}
+
+{% block modal %}{% endblock modal %}
+
+{% endblock content %}
+
+{% block extra_javascript %}{% endblock extra_javascript %}
